@@ -1,8 +1,10 @@
-package ir.developer_boy.mnews;
+package ir.developer_boy.mnews.main;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import ir.developer_boy.mnews.R;
 
 public class MainActivity extends AppCompatActivity {
 
