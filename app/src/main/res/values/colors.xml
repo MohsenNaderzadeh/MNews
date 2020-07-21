@@ -7,4 +7,7 @@
     <color name="gray200">#EEEEEE</color>
     <color name="gray300">#E0E0E0</color>
     <color name="gray400">#BDBDBD</color>
+    <color name="all_toolbarTitleTextColor">@android:color/white</color>
+    <color name="all_toolbarIconColor">@android:color/white</color>
+    <color name="categories_iconColor">@color/gray300</color>
 </resources>

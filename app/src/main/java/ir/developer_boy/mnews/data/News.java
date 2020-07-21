@@ -57,6 +57,7 @@ public class News {
     }
 
     public boolean isVideoNews(){
-        return !image.isEmpty()&&!Video.isEmpty();
+        return image != null && Video != null;
+
     }
 }

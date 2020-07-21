@@ -2,7 +2,6 @@ package ir.developer_boy.mnews.home;
 
 import java.util.List;
 
-import io.reactivex.Scheduler;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -39,6 +38,7 @@ public class HomePresenter implements HomeContract.HomePresenter {
     public void getNewsList() {
         if(view!=null)
         {
+            view.setProgressIndicator(true);
             newsDataSource.getAllNews()
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -50,7 +50,6 @@ public class HomePresenter implements HomeContract.HomePresenter {
 
                         @Override
                         public void onSuccess(List<News> news) {
-                            view.setProgressIndicator(true);
                             view.showNews(news);
                             view.setProgressIndicator(false);
                         }

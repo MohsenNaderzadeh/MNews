@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="116dp"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/frame_news_ImageContainer"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp">
+
+        <ImageView
+            android:id="@+id/iv_news_image"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/iv_news_video_Indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:srcCompat="@drawable/arrow_right_drop_circle" />
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/tv_news_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/frame_news_ImageContainer"
+        android:layout_toEndOf="@id/frame_news_ImageContainer"
+        android:maxLines="4"
+        android:minLines="4" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_news_title"
+        android:layout_toEndOf="@id/frame_news_ImageContainer">
+
+        <ImageView
+            android:id="@+id/iv_news_date_Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
+            app:srcCompat="@drawable/calendar_clock" />
+
+        <TextView
+            android:id="@+id/tv_news_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/iv_news_date_Icon"
+            android:textColor="@color/gray300" />
+    </RelativeLayout>
+</RelativeLayout>

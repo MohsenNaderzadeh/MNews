@@ -11,7 +11,8 @@ public interface EnglishApiService {
 
     @GET("GetNewsToEnglish.php")
     Single<List<News>> getNews();
-    @GET("GetNewsToPersian.php")
+
+    @GET("GetBanners.php")
     Single<List<Banners>> getBanners();
 
     @GET("GetNewsToEnglish.php")
