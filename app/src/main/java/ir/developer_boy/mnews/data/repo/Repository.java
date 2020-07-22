@@ -1,21 +1,40 @@
 package ir.developer_boy.mnews.data.repo;
 
+import android.content.Context;
+
 import java.util.List;
 
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import ir.developer_boy.mnews.data.AppDataBase;
 import ir.developer_boy.mnews.data.Banners;
 import ir.developer_boy.mnews.data.News;
 import ir.developer_boy.mnews.data.repo.api.provider.EnglishApiServiceProvider;
 
 public class Repository implements NewsDataSource {
 
-    private LocalDataSource localDataSource = new LocalDataSource();
+    private LocalDataSource localDataSource;
     private CloudDataSource cloudDataSource = new CloudDataSource(EnglishApiServiceProvider.getEnglishApiService());
 
+    public Repository(Context context) {
+        localDataSource = AppDataBase.getRoom(context).getLocalDataSource();
+    }
+
     @Override
-    public Single<List<News>> getAllNews() {
-        return cloudDataSource.getAllNews();
+    public Flowable<List<News>> getAllNews() {
+        cloudDataSource.getAllNews()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.newThread())
+                .doOnNext(new Consumer<List<News>>() {
+                    @Override
+                    public void accept(List<News> news) throws Exception {
+                        localDataSource.saveNewsList(news);
+                    }
+                }).subscribe();
+        return localDataSource.getAllNews();
     }
 
     @Override

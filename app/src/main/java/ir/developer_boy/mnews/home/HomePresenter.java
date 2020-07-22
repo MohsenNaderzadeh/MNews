@@ -1,11 +1,14 @@
 package ir.developer_boy.mnews.home;
 
+import org.reactivestreams.Subscription;
+
 import java.util.List;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import ir.developer_boy.mnews.R;
 import ir.developer_boy.mnews.data.Banners;
@@ -16,7 +19,8 @@ public class HomePresenter implements HomeContract.HomePresenter {
     HomeContract.HomeFragmentView view;
     private NewsDataSource newsDataSource;
     private CompositeDisposable compositeDisposable=new CompositeDisposable();
-
+    private boolean isViewRendered;
+    private Subscription subscription;
     public HomePresenter(NewsDataSource newsDataSource) {
         this.newsDataSource = newsDataSource;
     }
@@ -24,13 +28,17 @@ public class HomePresenter implements HomeContract.HomePresenter {
     @Override
     public void attachView(HomeContract.HomeFragmentView view) {
         this.view=view;
-        getBanners();
-        getNewsList();
+        if (!isViewRendered) {
+            getBanners();
+            getNewsList();
+        }
+
     }
 
     @Override
     public void detachView() {
         compositeDisposable.clear();
+        subscription.cancel();
         this.view=null;
     }
 
@@ -42,24 +50,28 @@ public class HomePresenter implements HomeContract.HomePresenter {
             newsDataSource.getAllNews()
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new SingleObserver<List<News>>() {
+                    .doOnSubscribe(new Consumer<Subscription>() {
                         @Override
-                        public void onSubscribe(Disposable d) {
-                            compositeDisposable.add(d);
+                        public void accept(Subscription subscription) throws Exception {
+                            HomePresenter.this.subscription = subscription;
                         }
-
+                    })
+                    .doOnNext(new Consumer<List<News>>() {
                         @Override
-                        public void onSuccess(List<News> news) {
+                        public void accept(List<News> news) throws Exception {
+                            isViewRendered = true;
+                            view.setProgressIndicator(false);
                             view.showNews(news);
-                            view.setProgressIndicator(false);
                         }
-
+                    })
+                    .doOnError(new Consumer<Throwable>() {
                         @Override
-                        public void onError(Throwable e) {
+                        public void accept(Throwable throwable) throws Exception {
                             view.setProgressIndicator(false);
-                            view.showErrorMessage(view.getViewContext().getString(R.string.all_unknown_error));
+                            view.showErrorMessage(view.getViewContext().getString(R.string.all_unknownError));
                         }
-                    });
+                    })
+                    .subscribe();
         }
     }
 
@@ -81,12 +93,13 @@ public class HomePresenter implements HomeContract.HomePresenter {
                             view.setProgressIndicator(true);
                             view.showBanners(banners);
                             view.setProgressIndicator(false);
+                            isViewRendered = true;
                         }
 
                         @Override
                         public void onError(Throwable e) {
                             view.setProgressIndicator(false);
-                            view.showErrorMessage(view.getViewContext().getString(R.string.all_unknown_error));
+                            view.showErrorMessage(view.getViewContext().getString(R.string.all_unknownError));
                         }
                     });
         }

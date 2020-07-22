@@ -1,5 +1,6 @@
 package ir.developer_boy.mnews.home.adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import ir.developer_boy.mnews.R;
 import ir.developer_boy.mnews.data.News;
+import ir.developer_boy.mnews.details.NewsDetailActivity;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
 
@@ -52,11 +54,21 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             videoIndicator = itemView.findViewById(R.id.iv_news_video_Indicator);
         }
 
-        public void bindNews(News news) {
+        public void bindNews(final News news) {
             Picasso.get().load(news.getImage()).into(iv_news_image);
             tv_news_title.setText(news.getTitle());
             tv_news_date.setText(news.getDate());
+            boolean newsindicator = news.isVideoNews();
             videoIndicator.setVisibility(news.isVideoNews() ? View.VISIBLE : View.GONE);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(itemView.getContext(), NewsDetailActivity.class);
+                    intent.putExtra(NewsDetailActivity.EXTRA_KEY_NEWS, news);
+                    itemView.getContext().startActivity(intent);
+                }
+            });
         }
     }
 }

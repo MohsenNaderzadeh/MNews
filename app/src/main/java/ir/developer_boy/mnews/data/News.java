@@ -1,11 +1,28 @@
 package ir.developer_boy.mnews.data;
 
-public class News {
-    private int id;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+@Entity(tableName = "tbl_news")
+public class News implements Parcelable {
+    public static final Parcelable.Creator<News> CREATOR = new Parcelable.Creator<News>() {
+        @Override
+        public News createFromParcel(Parcel source) {
+            return new News(source);
+        }
+
+        @Override
+        public News[] newArray(int size) {
+            return new News[size];
+        }
+    };
     private String title;
     private String content;
     private String image;
-    private String Video;
+    @PrimaryKey
+    private int id;
     private String date;
 
     public String getDate() {
@@ -48,16 +65,44 @@ public class News {
         this.image = image;
     }
 
+    private String video;
+
+    public News() {
+    }
+
+    protected News(Parcel in) {
+        this.id = in.readInt();
+        this.title = in.readString();
+        this.content = in.readString();
+        this.image = in.readString();
+        this.video = in.readString();
+        this.date = in.readString();
+    }
+
     public String getVideo() {
-        return Video;
+        return video;
     }
 
     public void setVideo(String video) {
-        Video = video;
+        this.video = video;
     }
 
     public boolean isVideoNews(){
-        return image != null && Video != null;
+        return video.length() > 0 && image.length() > 0;
+    }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.title);
+        dest.writeString(this.content);
+        dest.writeString(this.image);
+        dest.writeString(this.video);
+        dest.writeString(this.date);
     }
 }

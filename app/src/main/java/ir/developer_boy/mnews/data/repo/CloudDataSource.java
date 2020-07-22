@@ -3,6 +3,7 @@ package ir.developer_boy.mnews.data.repo;
 import java.util.List;
 
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 import ir.developer_boy.mnews.data.Banners;
 import ir.developer_boy.mnews.data.News;
@@ -16,7 +17,7 @@ public class CloudDataSource implements NewsDataSource {
     }
 
     @Override
-    public Single<List<News>> getAllNews() {
+    public Flowable<List<News>> getAllNews() {
         return englishApiService.getNews();
     }
 
