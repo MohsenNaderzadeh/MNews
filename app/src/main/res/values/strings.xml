@@ -15,4 +15,5 @@
     <string name="category_health">Health</string>
     <string name="category_technology">Technology</string>
 
+    <string name="bookmark_addNewBookmark">There is no bookmarked News, Start Now!</string>
 </resources>

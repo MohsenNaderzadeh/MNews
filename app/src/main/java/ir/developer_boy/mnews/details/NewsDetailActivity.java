@@ -13,10 +13,14 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.greenrobot.eventbus.EventBus;
+
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
 import ir.developer_boy.mnews.R;
 import ir.developer_boy.mnews.data.News;
+import ir.developer_boy.mnews.data.NewsDataSourceProvider;
+import ir.developer_boy.mnews.data.repo.NewsDataSource;
 
 public class NewsDetailActivity extends AppCompatActivity {
 
@@ -25,6 +29,7 @@ public class NewsDetailActivity extends AppCompatActivity {
     private static final int VIDEO_HEIGHT = 360;
     private News news;
     private JZVideoPlayerStandard news_details_video_player;
+    private NewsDataSource newsReposiotry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +50,7 @@ public class NewsDetailActivity extends AppCompatActivity {
     private void setUpViews() {
 
         Toolbar toolbar = findViewById(R.id.toolbar_details);
-
+        newsReposiotry = NewsDataSourceProvider.getNewsDataSource(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -95,6 +100,18 @@ public class NewsDetailActivity extends AppCompatActivity {
 
         TextView tv_details_content = findViewById(R.id.tv_details_content);
         tv_details_content.setText(news.getContent());
+
+        final ImageView bookmarkImageView = findViewById(R.id.iv_details_bookmark);
+        bookmarkImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(news);
+                news.setBookmarked(!news.isBookmarked());
+                newsReposiotry.bookmarkNews(news);
+                bookmarkImageView.setImageResource(news.isBookmarked() ? R.drawable.bookmark_check : R.drawable.bookmark_outline);
+            }
+        });
+        bookmarkImageView.setImageResource(news.isBookmarked() ? R.drawable.bookmark_check : R.drawable.bookmark_outline);
     }
 
     @Override

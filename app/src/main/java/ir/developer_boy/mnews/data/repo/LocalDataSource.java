@@ -5,10 +5,10 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import ir.developer_boy.mnews.data.Banners;
@@ -20,7 +20,7 @@ public abstract class LocalDataSource implements NewsDataSource {
     @Override
     public abstract Flowable<List<News>> getAllNews();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract void saveNewsList(List<News> news);
 
 
@@ -39,19 +39,12 @@ public abstract class LocalDataSource implements NewsDataSource {
         return null;
     }
 
-    @Override
-    public Completable bookMarkNews(News news) {
-        return null;
-    }
+    @Update
+    public abstract void bookmarkNews(News news);
 
-    @Override
-    public Single<List<News>> getBookMarkedNews() {
-        return null;
-    }
+    @Query("Select * from tbl_news where is_bookmarked Like 1")
+    public abstract Single<List<News>> getBookMarkedNews();
 
-    @Override
-    public Completable unBooMarkNews(News news) {
-        return null;
-    }
+
 
 }

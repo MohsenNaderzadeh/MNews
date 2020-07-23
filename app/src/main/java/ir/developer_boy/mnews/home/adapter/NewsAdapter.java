@@ -10,6 +10,10 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +24,7 @@ import ir.developer_boy.mnews.details.NewsDetailActivity;
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
 
     private List<News> newsList = new ArrayList<>();
+    private int PendingPosition;
 
     public NewsAdapter(List<News> newsList) {
         this.newsList = newsList;
@@ -38,6 +43,24 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     @Override
     public int getItemCount() {
         return newsList.size();
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void updateNews(News news) {
+        this.newsList.set(PendingPosition, news);
+        notifyItemChanged(PendingPosition);
     }
 
     public class NewsViewHolder extends RecyclerView.ViewHolder {
@@ -64,6 +87,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    PendingPosition = getAdapterPosition();
                     Intent intent = new Intent(itemView.getContext(), NewsDetailActivity.class);
                     intent.putExtra(NewsDetailActivity.EXTRA_KEY_NEWS, news);
                     itemView.getContext().startActivity(intent);

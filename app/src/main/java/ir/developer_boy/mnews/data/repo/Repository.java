@@ -4,7 +4,6 @@ import android.content.Context;
 
 import java.util.List;
 
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.functions.Consumer;
@@ -53,18 +52,15 @@ public class Repository implements NewsDataSource {
     }
 
     @Override
-    public Completable bookMarkNews(News news) {
-        return localDataSource.bookMarkNews(news);
+    public void bookmarkNews(News news) {
+        localDataSource.bookmarkNews(news);
     }
+
 
     @Override
     public Single<List<News>> getBookMarkedNews() {
         return localDataSource.getBookMarkedNews();
     }
 
-    @Override
-    public Completable unBooMarkNews(News news) {
-        return localDataSource.unBooMarkNews(news);
-    }
 
 }

@@ -2,7 +2,6 @@ package ir.developer_boy.mnews.data.repo;
 
 import java.util.List;
 
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import ir.developer_boy.mnews.data.Banners;
@@ -15,10 +14,9 @@ public interface NewsDataSource {
     Single<List<News>> getVideoNews();
     Single<News>searchNews(String keyword);
 
-    Completable bookMarkNews(News news);
+    void bookmarkNews(News news);
 
     Single<List<News>> getBookMarkedNews();
-    Completable unBooMarkNews(News news);
 
 
 

@@ -2,7 +2,6 @@ package ir.developer_boy.mnews.data.repo;
 
 import java.util.List;
 
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import ir.developer_boy.mnews.data.Banners;
@@ -37,17 +36,13 @@ public class CloudDataSource implements NewsDataSource {
     }
 
     @Override
-    public Completable bookMarkNews(News news) {
-        return null;
+    public void bookmarkNews(News news) {
+
     }
+
 
     @Override
     public Single<List<News>> getBookMarkedNews() {
-        return null;
-    }
-
-    @Override
-    public Completable unBooMarkNews(News news) {
         return null;
     }
 

@@ -21,7 +21,7 @@ import ir.developer_boy.mnews.base.BaseActivity;
 import ir.developer_boy.mnews.base.BaseFragment;
 import ir.developer_boy.mnews.data.Banners;
 import ir.developer_boy.mnews.data.News;
-import ir.developer_boy.mnews.data.repo.Repository;
+import ir.developer_boy.mnews.data.NewsDataSourceProvider;
 import ir.developer_boy.mnews.home.adapter.BannerAdapter;
 import ir.developer_boy.mnews.home.adapter.NewsAdapter;
 import ir.developer_boy.mnews.list.NewsListActivity;
@@ -40,7 +40,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeFragm
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        homePresenter = new HomePresenter(new Repository(getViewContext()));
+        homePresenter = new HomePresenter(NewsDataSourceProvider.getNewsDataSource(getContext()));
     }
 
     @Override

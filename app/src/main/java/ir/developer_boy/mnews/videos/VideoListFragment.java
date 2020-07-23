@@ -13,7 +13,7 @@ import ir.developer_boy.mnews.R;
 import ir.developer_boy.mnews.base.BaseActivity;
 import ir.developer_boy.mnews.base.BaseFragment;
 import ir.developer_boy.mnews.data.News;
-import ir.developer_boy.mnews.data.repo.Repository;
+import ir.developer_boy.mnews.data.NewsDataSourceProvider;
 import ir.developer_boy.mnews.home.adapter.NewsAdapter;
 
 public class VideoListFragment extends BaseFragment implements VideoListContract.View {
@@ -23,7 +23,7 @@ public class VideoListFragment extends BaseFragment implements VideoListContract
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presneter = new VideoListPresneter(new Repository(getViewContext()));
+        presneter = new VideoListPresneter(NewsDataSourceProvider.getNewsDataSource(getContext()));
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ir.developer_boy.mnews.data;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
@@ -7,7 +8,14 @@ import android.os.Parcelable;
 
 @Entity(tableName = "tbl_news")
 public class News implements Parcelable {
-    public static final Parcelable.Creator<News> CREATOR = new Parcelable.Creator<News>() {
+    private String title;
+    private String content;
+    private String image;
+    @PrimaryKey
+    private int id;
+    private String date;
+
+    public static final Creator<News> CREATOR = new Creator<News>() {
         @Override
         public News createFromParcel(Parcel source) {
             return new News(source);
@@ -18,12 +26,18 @@ public class News implements Parcelable {
             return new News[size];
         }
     };
-    private String title;
-    private String content;
-    private String image;
-    @PrimaryKey
-    private int id;
-    private String date;
+    @ColumnInfo(name = "is_bookmarked")
+    private boolean isBookmarked;
+
+    protected News(Parcel in) {
+        this.title = in.readString();
+        this.content = in.readString();
+        this.image = in.readString();
+        this.id = in.readInt();
+        this.date = in.readString();
+        this.isBookmarked = in.readByte() != 0;
+        this.video = in.readString();
+    }
 
     public String getDate() {
         return date;
@@ -70,15 +84,6 @@ public class News implements Parcelable {
     public News() {
     }
 
-    protected News(Parcel in) {
-        this.id = in.readInt();
-        this.title = in.readString();
-        this.content = in.readString();
-        this.image = in.readString();
-        this.video = in.readString();
-        this.date = in.readString();
-    }
-
     public String getVideo() {
         return video;
     }
@@ -96,13 +101,22 @@ public class News implements Parcelable {
         return 0;
     }
 
+    public boolean isBookmarked() {
+        return isBookmarked;
+    }
+
+    public void setBookmarked(boolean bookmarked) {
+        isBookmarked = bookmarked;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
         dest.writeString(this.title);
         dest.writeString(this.content);
         dest.writeString(this.image);
-        dest.writeString(this.video);
+        dest.writeInt(this.id);
         dest.writeString(this.date);
+        dest.writeByte(this.isBookmarked ? (byte) 1 : (byte) 0);
+        dest.writeString(this.video);
     }
 }
