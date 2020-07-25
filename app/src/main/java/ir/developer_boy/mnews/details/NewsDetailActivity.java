@@ -3,7 +3,6 @@ package ir.developer_boy.mnews.details;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +17,12 @@ import org.greenrobot.eventbus.EventBus;
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
 import ir.developer_boy.mnews.R;
+import ir.developer_boy.mnews.base.BaseActivity;
 import ir.developer_boy.mnews.data.News;
 import ir.developer_boy.mnews.data.NewsDataSourceProvider;
 import ir.developer_boy.mnews.data.repo.NewsDataSource;
 
-public class NewsDetailActivity extends AppCompatActivity {
+public class NewsDetailActivity extends BaseActivity {
 
     public static final String EXTRA_KEY_NEWS = "news_key";
     private static final int VIDEO_WIDTH = 640;
@@ -126,5 +126,10 @@ public class NewsDetailActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         JZVideoPlayerStandard.releaseAllVideos();
+    }
+
+    @Override
+    public void showProgressBarIndicator(boolean mustshow) {
+
     }
 }

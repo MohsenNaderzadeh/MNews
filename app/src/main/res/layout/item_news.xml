@@ -45,11 +45,11 @@
         android:layout_toEndOf="@id/frame_news_ImageContainer">
 
         <ImageView
-            android:id="@+id/iv_news_date_Icon"
+            android:id="@+id/iv_news_dateIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginEnd="8dp"
+            android:layout_centerVertical="true"
             app:srcCompat="@drawable/calendar_clock" />
 
         <TextView
@@ -57,7 +57,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/iv_news_date_Icon"
+            android:layout_toEndOf="@id/iv_news_dateIcon"
+            android:text="1394/05/26"
             android:textColor="@color/gray300" />
     </RelativeLayout>
 </RelativeLayout>

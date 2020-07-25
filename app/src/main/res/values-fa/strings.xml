@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">ام نیوز</string>
+    <string name="all_home">خانه</string>
+    <string name="all_categories">دسته بندیها</string>
+    <string name="all_bookmarks">نشانه گذاری شده ها</string>
+    <string name="all_videos">ویدئوها</string>
+    <string name="home_viewAll">نمایش همه</string>
+    <string name="home_latestNews">آخرین اخبار</string>
+    <string name="home_searchHint">متن مورد جستجو را اینجا وارد کنید...</string>
+    <string name="all_unknownError">خطای ناشناخته</string>
+    <string name="category_topStories">اخبار داغ</string>
+    <string name="category_World">جهان</string>
+    <string name="category_business">کسب و کار</string>
+    <string name="category_iran">ایران</string>
+    <string name="category_health">سلامت</string>
+    <string name="category_technology">تکنولوژی</string>
+
+    <string name="bookmark_addNewBookmark">هیچ خبر نشانه گذاری شده ای وجود ندارد ، یک خبر نشانه گذاری کنید.</string>
+
+
+    <string name="setting_Title">تنظیمات</string>
+    <string name="setting_selectlocaleMessage">تنظیم زبان پیشفرض نرم افزار</string>
+    <string name="setting_restartMessage">لطفا یک بار نرم افزار را ببندید و دوباره باز کنید تا تنظیمات زبان جدید اعمال شود</string>
+
+</resources>

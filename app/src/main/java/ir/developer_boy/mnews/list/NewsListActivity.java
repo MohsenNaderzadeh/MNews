@@ -1,7 +1,6 @@
 package ir.developer_boy.mnews.list;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,10 +8,11 @@ import android.view.View;
 import java.util.ArrayList;
 
 import ir.developer_boy.mnews.R;
+import ir.developer_boy.mnews.base.BaseActivity;
 import ir.developer_boy.mnews.data.News;
 import ir.developer_boy.mnews.home.adapter.NewsAdapter;
 
-public class NewsListActivity extends AppCompatActivity {
+public class NewsListActivity extends BaseActivity {
 
     public static final String EXTRA_KEY_NEWS = "news";
     private ArrayList<News> newsList;
@@ -48,5 +48,10 @@ public class NewsListActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void showProgressBarIndicator(boolean mustshow) {
+
     }
 }

@@ -11,15 +11,19 @@ import io.reactivex.schedulers.Schedulers;
 import ir.developer_boy.mnews.data.AppDataBase;
 import ir.developer_boy.mnews.data.Banners;
 import ir.developer_boy.mnews.data.News;
-import ir.developer_boy.mnews.data.repo.api.provider.EnglishApiServiceProvider;
+import ir.developer_boy.mnews.settings.LocaleLanguageSharedPrefManager;
 
 public class Repository implements NewsDataSource {
 
     private LocalDataSource localDataSource;
-    private CloudDataSource cloudDataSource = new CloudDataSource(EnglishApiServiceProvider.getEnglishApiService());
-
+    private CloudDataSource cloudDataSource;
     public Repository(Context context) {
         localDataSource = AppDataBase.getRoom(context).getLocalDataSource();
+        if (LocaleLanguageSharedPrefManager.getLocaleLanguageSharedPrefManager(context).getLanguage().equals("en")) {
+            cloudDataSource = new EnglishCloudDataSource();
+        } else {
+            cloudDataSource = new PersianCloudDataSource();
+        }
     }
 
     @Override
@@ -35,6 +39,10 @@ public class Repository implements NewsDataSource {
                 }).subscribe();
         return localDataSource.getAllNews();
     }
+
+
+
+
 
     @Override
     public Single<List<Banners>> getBannersList() {
@@ -63,4 +71,7 @@ public class Repository implements NewsDataSource {
     }
 
 
+    public void clearCache() {
+        localDataSource.clearDBContent();
+    }
 }

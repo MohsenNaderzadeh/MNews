@@ -25,6 +25,7 @@ import ir.developer_boy.mnews.data.NewsDataSourceProvider;
 import ir.developer_boy.mnews.home.adapter.BannerAdapter;
 import ir.developer_boy.mnews.home.adapter.NewsAdapter;
 import ir.developer_boy.mnews.list.NewsListActivity;
+import ir.developer_boy.mnews.settings.SettingActivity;
 
 public class HomeFragment extends BaseFragment implements HomeContract.HomeFragmentView {
 
@@ -34,6 +35,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeFragm
     private RecyclerView rv_home_newslist;
     private TextView tv_Home_viewAll;
     private View iv_home_search;
+    private View setting;
     private NewsAdapter newsAdapter;
     private BannerAdapter bannerAdapter;
 
@@ -47,7 +49,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeFragm
     public void setUpViews() {
         tv_Home_viewAll = rootView.findViewById(R.id.tv_Home_viewAll);
         iv_home_search = rootView.findViewById(R.id.iv_home_search);
-
+        setting = rootView.findViewById(R.id.iv_home_setting);
     }
 
     @Override
@@ -65,14 +67,22 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeFragm
         rv_home_newslist = rootView.findViewById(R.id.rv_home_newslist);
         rv_home_newslist.setLayoutManager(new LinearLayoutManager(getViewContext(), LinearLayoutManager.VERTICAL, false));
         newsAdapter = new NewsAdapter(newslist);
-        rv_home_newslist.setNestedScrollingEnabled(false);
         rv_home_newslist.setAdapter(newsAdapter);
         rv_home_newslist.setOnFlingListener(null);
+        rv_home_newslist.setNestedScrollingEnabled(false);
+
         tv_Home_viewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getViewContext(), NewsListActivity.class);
                 intent.putParcelableArrayListExtra(NewsListActivity.EXTRA_KEY_NEWS, (ArrayList<? extends Parcelable>) newslist);
+                startActivity(intent);
+            }
+        });
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SettingActivity.class);
                 startActivity(intent);
             }
         });

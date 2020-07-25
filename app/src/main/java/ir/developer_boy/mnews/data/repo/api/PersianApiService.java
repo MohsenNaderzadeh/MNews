@@ -8,14 +8,14 @@ import ir.developer_boy.mnews.data.Banners;
 import ir.developer_boy.mnews.data.News;
 import retrofit2.http.GET;
 
-public interface EnglishApiService {
+public interface PersianApiService {
 
-    @GET("GetNewsToEnglish.php")
+    @GET("GetNewsToPersian.php")
     Flowable<List<News>> getNews();
 
-    @GET("GetBanners.php")
+    @GET("GetPersianBannersList.php")
     Single<List<Banners>> getBanners();
 
-    @GET("GetEnglishVideoNewsList.php")
+    @GET("GetPersianVideoNewsListApi.php")
     Single<List<News>> getVideoNews();
 }

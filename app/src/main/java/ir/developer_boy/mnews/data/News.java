@@ -93,7 +93,12 @@ public class News implements Parcelable {
     }
 
     public boolean isVideoNews(){
-        return video.length() > 0 && image.length() > 0;
+        if (video != null && image != null) {
+            return video.length() > 0 && image.length() > 0;
+        } else {
+            return false;
+        }
+
     }
 
     @Override

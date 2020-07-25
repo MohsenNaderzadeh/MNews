@@ -16,4 +16,10 @@
     <string name="category_technology">Technology</string>
 
     <string name="bookmark_addNewBookmark">There is no bookmarked News, Start Now!</string>
+
+
+    <string name="setting_Title">Settings</string>
+    <string name="setting_selectlocaleMessage">Select Application Default Language</string>
+    <string name="setting_restartMessage">please restart application for changing language</string>
+
 </resources>

@@ -12,12 +12,19 @@
             android:layout_width="match_parent"
             android:layout_height="56dp">
 
-            <TextView
+            <ImageView
+                android:id="@+id/iv_home_setting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="8dp"
+                app:srcCompat="@drawable/ic_more_vert_white_24dp" />
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:text="@string/app_name"
+                android:layout_toEndOf="@id/iv_home_setting"
                 android:textColor="@android:color/white"
                 android:textSize="18sp" />
 

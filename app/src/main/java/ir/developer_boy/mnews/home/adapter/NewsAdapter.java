@@ -1,7 +1,10 @@
 package ir.developer_boy.mnews.home.adapter;
 
 import android.content.Intent;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import ir.developer_boy.mnews.R;
 import ir.developer_boy.mnews.data.News;
@@ -80,8 +84,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         public void bindNews(final News news) {
             Picasso.get().load(news.getImage()).into(iv_news_image);
             tv_news_title.setText(news.getTitle());
+
+            if (TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+                tv_news_title.setGravity(Gravity.RIGHT);
+            } else {
+                tv_news_title.setGravity(Gravity.LEFT);
+            }
             tv_news_date.setText(news.getDate());
-            boolean newsindicator = news.isVideoNews();
+
             videoIndicator.setVisibility(news.isVideoNews() ? View.VISIBLE : View.GONE);
 
             itemView.setOnClickListener(new View.OnClickListener() {

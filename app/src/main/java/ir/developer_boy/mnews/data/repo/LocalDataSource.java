@@ -45,6 +45,8 @@ public abstract class LocalDataSource implements NewsDataSource {
     @Query("Select * from tbl_news where is_bookmarked Like 1")
     public abstract Single<List<News>> getBookMarkedNews();
 
+    @Query("Delete from tbl_news")
+    public abstract void clearDBContent();
 
 
 }
